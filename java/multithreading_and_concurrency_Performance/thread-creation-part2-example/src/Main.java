@@ -49,6 +49,11 @@ public class Main {
         }
     }
 
+    /**
+     *
+     * 금고 비밀번호가 기본값이며 비밀번호확인 method를 call 하면 0.05초
+     * sleep 한다.
+     */
     private static class Vault {
         private int password;
 
@@ -65,6 +70,9 @@ public class Main {
         }
     }
 
+    /**
+     * HackerThread 금고를 생성자를 통해 받으며, 이름과 우선순위를 설정한다.
+     */
     private static abstract class HackerThread extends Thread {
         protected Vault vault;
 
@@ -81,6 +89,12 @@ public class Main {
         }
     }
 
+    /**
+     * HackerThread를 extends 받아서 start() method call 이후
+     * run에서 해당 thread가 무엇을 처리해야하는지 정의한다.
+     * Max_PAssword만큼 loop를 돌면서 금고의 비밀번호를 check한다.
+     * 맞으면 system을 종료시킨다.
+     */
     private static class AscendingHackerThread extends HackerThread {
 
         public AscendingHackerThread(Vault vault) {
@@ -98,6 +112,12 @@ public class Main {
         }
     }
 
+    /**
+     * HackerThread를 extends 받아서 start() method call 이후
+     * run에서 해당 thread가 무엇을 처리해야하는지 정의한다.
+     * Max_PAssword만큼 loop를 돌면서 금고의 비밀번호를 check한다.
+     * 맞으면 system을 종료시킨다.
+     */
     private static class DescendingHackerThread extends HackerThread {
 
         public DescendingHackerThread(Vault vault) {
@@ -115,6 +135,11 @@ public class Main {
         }
     }
 
+    /**
+     * policeThread 10초동안 count 하며 10초가 지나면 police가 이기게 된다.
+     * 10초 이 후에는 thread를 종료시킨다.
+     *
+     */
     private static class PoliceThread extends Thread {
         @Override
         public void run() {
