@@ -31,6 +31,8 @@ public class Main1 {
         Thread thread = new Thread(new BlockingTask());
 
         thread.start();
+
+        thread.interrupt();
     }
 
     private static class BlockingTask implements Runnable {
