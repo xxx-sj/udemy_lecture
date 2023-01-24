@@ -37,6 +37,7 @@ public class Main {
 
         List<FactorialThread> threads = new ArrayList<>();
 
+
         for (long inputNumber : inputNumbers) {
             threads.add(new FactorialThread(inputNumber));
         }
