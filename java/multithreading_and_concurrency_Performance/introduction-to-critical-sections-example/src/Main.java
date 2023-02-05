@@ -73,6 +73,7 @@ public class Main {
         }
     }
 
+
     private static class InventoryCounter {
         private int items = 0;
 
