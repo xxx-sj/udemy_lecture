@@ -77,19 +77,19 @@ public class Main {
         private int items = 0;
 
         Object lock = new Object();
-
+        //method 선언에 synchronized keyword를 사용해도 된다.
         public void increment() {
             synchronized (this.lock) {
                 items++;
             }
         }
-
+        //method 선언에 synchronized keyword를 사용해도 된다.
         public void decrement() {
             synchronized (this.lock) {
                 items--;
             }
         }
-
+        //method 선언에 synchronized keyword를 사용해도 된다.
         public int getItems() {
             synchronized (this.lock) {
                 return items;
