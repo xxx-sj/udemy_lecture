@@ -53,6 +53,13 @@ public class Main extends Application {
         launch(args);
     }
 
+    //UI 스레드를 가리키는 것은 start method
+
+    /**
+     * run method와 비슷하다.
+     *
+     *
+     */
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Cryptocurrency Prices");
@@ -74,15 +81,27 @@ public class Main extends Application {
 
         primaryStage.setScene(new Scene(root, width, height));
 
+        //ui thread와 worker thread가 공유할 자원 인스턴스 생성
         PricesContainer pricesContainer = new PricesContainer();
 
+        //worker thread 생성
         PriceUpdater priceUpdater = new PriceUpdater(pricesContainer);
 
+        //animation timer 추가
+        //UI thread가 30프레임이라면 초당 30번 호출된다.
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                //일반 lock 사용
+                /**
+                 * if (pricesContainer.getLockObject().tryLock()) { [x]
+                 * pricesContainer.getLcokObject.lock()
+                 *
+                 *
+                 */
                 if (pricesContainer.getLockObject().tryLock()) {
                     try {
+                        //라벨들을 가져와서 text 세팅해줌. text는 container에서 getPrice로 가져옴 [공유 자원]
                         Label bitcoinLabel = cryptoLabels.get("BTC");
                         bitcoinLabel.setText(String.valueOf(pricesContainer.getBitcoinPrice()));
 
@@ -106,8 +125,10 @@ public class Main extends Application {
 
         addWindowResizeListener(primaryStage, background);
 
+        //animation timer start
         animationTimer.start();
 
+        // worker thread start
         priceUpdater.start();
 
         primaryStage.show();
@@ -186,7 +207,13 @@ public class Main extends Application {
         System.exit(0);
     }
 
+    //자산 가격을 포함할 공유 클래스
+
+    /**
+     * 5개의 암호화폐 가격을 추적한다.
+     */
     public static class PricesContainer {
+        //2개의 스레드가 접근하기 때문에 lock 생성
         private Lock lockObject = new ReentrantLock();
 
         private double bitcoinPrice;
@@ -240,8 +267,10 @@ public class Main extends Application {
         }
     }
 
+    //worker thread
     public static class PriceUpdater extends Thread {
         private PricesContainer pricesContainer;
+        //시뮬레이터
         private Random random = new Random();
 
         public PriceUpdater(PricesContainer pricesContainer) {
@@ -255,7 +284,8 @@ public class Main extends Application {
 
                 try {
                     try {
-                        Thread.sleep(1000);
+                        //network call
+                        Thread.sleep(1000); //네트워크 시뮬레이션
                     } catch (InterruptedException e) {
                     }
                     pricesContainer.setBitcoinPrice(random.nextInt(20000));
@@ -267,6 +297,7 @@ public class Main extends Application {
                     pricesContainer.getLockObject().unlock();
                 }
 
+                //현실적으로 5개보다 많을 수 있기 때문에 2초 더 추가
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
