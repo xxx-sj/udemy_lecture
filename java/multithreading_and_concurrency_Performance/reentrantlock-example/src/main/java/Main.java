@@ -125,10 +125,10 @@ public class Main extends Application {
 
         addWindowResizeListener(primaryStage, background);
 
-        //animation timer start
+        //animation timer start ui thread
         animationTimer.start();
 
-        // worker thread start
+        // worker thread start worker thread
         priceUpdater.start();
 
         primaryStage.show();

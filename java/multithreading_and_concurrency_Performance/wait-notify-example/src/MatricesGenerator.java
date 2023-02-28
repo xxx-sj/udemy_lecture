@@ -32,6 +32,8 @@ import java.util.StringJoiner;
  * Objects as Condition Variables - Wait(), Notify() and NotifyAll()
  * https://www.udemy.com/java-multithreading-concurrency-performance-optimization
  */
+
+// 10x10 행렬 10만개 만드는 class
 public class MatricesGenerator {
     private static final String OUTPUT_FILE = "./out/matrices";
     private static final int N = 10;
