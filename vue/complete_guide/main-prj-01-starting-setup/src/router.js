@@ -8,7 +8,7 @@ import CoachesList from '@/pages/coaches/CoachesList';
 // import RequestsReceived from '@/pages/requests/RequestsReceived';
 import NotFound from '@/pages/NotFound';
 // import UserAuth from '@/pages/auth/UserAuth';
-import store from './store/index'
+import store from './storae/index'
 
 const CoachDetail = () => import('@/pages/coaches/CoachDetail');
 const CoachRegistration = () => import('@/pages/coaches/CoachRegistration');
